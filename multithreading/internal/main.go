@@ -9,21 +9,9 @@ import (
 	"time"
 )
 
-// func main() {
-// threadMain()
-// sleep()
-// waitgroup()
-// forever()
-// contextExample()
-// pubsub()
-// pubsubwg()
-// loadbalancer()
-// atomicCount()
-// promiseRaceExample()
-// promiseAllForSelect()
-// promiseAllCaller()
-// promiseRaceExample()
-// }
+func main() {
+	threadMain()
+}
 
 // ------------------------------------------------------
 // # 1. THREAD MAIN
@@ -301,41 +289,4 @@ func promiseAllForSelect() {
 
 	fmt.Println(runtime.NumGoroutine())
 	fmt.Println(result)
-}
-
-// ------------------------------------------------------
-// # 10. PROMISE ALL - WAIT GROUP
-// ------------------------------------------------------
-//
-// Promise.all para N funções utilizando WaitGroup.
-
-func promiseAllCaller() {
-	f1 := func() string {
-		time.Sleep(100 * time.Millisecond)
-		return "f1"
-	}
-	f2 := func() string {
-		time.Sleep(500 * time.Millisecond)
-		return "f2"
-	}
-	f3 := func() string {
-		time.Sleep(1000 * time.Millisecond)
-		return "f3"
-	}
-	result := promiseAll(f1, f2, f3)
-	fmt.Println(result)
-}
-
-func promiseAll(funcs ...func() string) []string {
-	wg := sync.WaitGroup{}
-	wg.Add(len(funcs))
-	defer wg.Wait()
-	results := make([]string, len(funcs))
-	for i, f := range funcs {
-		go func() {
-			results[i] = f()
-			wg.Done()
-		}()
-	}
-	return results
 }
